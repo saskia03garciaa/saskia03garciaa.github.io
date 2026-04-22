@@ -2,44 +2,39 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Exploit AirSecure</title>
+    <title>Metrics Debug</title>
 </head>
 <body>
-
-<h2>Exploit AirSecure</h2>
-<button onclick="run()">Ejecutar exploit</button>
-
+<h2>Generate Boarding Pass (Metrics)</h2>
+<input id="name" value="Jane Doe" placeholder="Name"><br><br>
+<input id="seat" value="14A" placeholder="Seat"><br><br>
+<input id="row" type="number" value="14" placeholder="Row"><br><br>
+<input id="flight" value="BP1337" placeholder="Flight"><br><br>
+<input id="eticket" value="847-2993187054" placeholder="ETicket"><br><br>
+<button onclick="generate()">Generate</button>
 <pre id="output"></pre>
-
 <script>
 function log(msg) {
     document.getElementById("output").textContent += msg + "\n";
 }
-
-function run() {
+function generate() {
     try {
         if (typeof _metrics === "undefined") {
-            log("❌ _metrics no existe (la app no cargó la interfaz)");
+            log("_metrics interface not found.");
             return;
         }
-
-        log("✅ Llamando a generateBoardingPass...");
-
-        let result = _metrics.generateBoardingPass(
-            "Jane Doe",          // nombre
-            "14A",               // asiento
-            14,                  // fila
-            "BP1337",            // vuelo
-            "847-2993187054"     // e-ticket
-        );
-
-        log("🎯 Resultado: " + result);
-
+        let name = document.getElementById("name").value;
+        let seat = document.getElementById("seat").value;
+        let row = parseInt(document.getElementById("row").value);
+        let flight = document.getElementById("flight").value;
+        let eticket = document.getElementById("eticket").value;
+        log("Calling _metrics.generateBoardingPass...");
+        let result = _metrics.generateBoardingPass(name, seat, row, flight, eticket);
+        log("Result: " + result);
     } catch (e) {
-        log("❌ Error: " + e);
+        log("Error: " + e);
     }
 }
 </script>
-
 </body>
 </html>
